@@ -1,0 +1,77 @@
+---
+- hosts: all
+  become: true
+  vars:
+    create_user: ${CREATE_USER}
+    copy_local_key: "{{ lookup('file', '${PUBLIC_KEY}') }}"
+    sys_packages: [ 'curl', 'vim', 'git', 'ufw']
+
+  tasks:
+    - name: Install Prerequisites
+      apt: name=aptitude update_cache=yes state=latest force_apt_get=yes
+
+    # sudo group setup
+    - name: Make sure we have a 'wheel' group
+      group:
+        name: wheel
+        state: present
+    - name: Allow 'wheel' group to have passwordless sudo
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        regexp: '^%wheel'
+        line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+        validate: '/usr/sbin/visudo -cf %s'
+
+    # user + key setup
+    - name: Create a new regular user with sudo privileges
+      user:
+        name: "{{ create_user }}"
+        state: present
+        groups: wheel
+        append: true
+        create_home: true
+        shell: /bin/bash
+    - name: Set authorized key for remote user
+      authorized_key:
+        user: "{{ create_user }}"
+        state: present
+        key: "{{ copy_local_key }}"
+    - name: Disable password authentication for root
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        state: present
+        regexp: '^#?PermitRootLogin'
+        line: 'PermitRootLogin prohibit-password'
+
+    # install packages
+    - name: Update apt
+      apt: update_cache=yes
+    - name: Install required src packages
+      apt: name={{ sys_packages }} state=latest
+
+    # ufw setup
+    - name: UFW - Allow SSH connections
+      ufw:
+        rule: allow
+        name: OpenSSH
+    - name: UFW - Allow http (:80) connections
+      ufw:
+        rule: allow
+        port: '80'
+        proto: tcp
+    - name: UFW - Allow https (:443) connections
+      ufw:
+        rule: allow
+        port: '443'
+        proto: tcp
+    - name: UFW - Allow demo (:8000) connections
+      ufw:
+        rule: allow
+        port: '8000'
+        proto: tcp
+    - name: UFW - Deny all other incoming traffic by default
+      ufw:
+        state: enabled
+        policy: deny
+        direction: incoming

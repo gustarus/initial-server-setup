@@ -1,0 +1,45 @@
+{
+  "type": "module",
+  "name": "initial-server-setup",
+  "version": "1.0.0",
+  "description": "Tool to setup clean ubuntu 18.04 initially with docker and nginx under the hood via ansible playbooks",
+  "scripts": {
+    "watch": "./node_modules/.bin/tsc -w",
+    "build": "./node_modules/.bin/tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:gustarus/initial-server-setup.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gustarus/initial-server-setup/issues"
+  },
+  "homepage": "https://github.com/hustarus/initial-server-setup",
+  "bin": {
+    "initial-server-setup": "./dist/index.js"
+  },
+  "author": "Pavel Kondratenko <iam@kondratenko.me>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/preset-typescript": "^7.8.3",
+    "@types/commander": "^2.12.2",
+    "@types/fs-extra": "^8.0.1",
+    "@types/inquirer": "^6.5.0",
+    "@types/node": "^13.5.0",
+    "@types/yargs": "^15.0.1",
+    "babel-runtime": "^6.26.0",
+    "fs": "0.0.1-security",
+    "fs-extra": "^8.1.0",
+    "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "commander": "^4.1.0",
+    "inquirer": "^7.0.4",
+    "moment": "^2.24.0"
+  }
+}

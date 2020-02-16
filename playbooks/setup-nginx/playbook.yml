@@ -1,0 +1,59 @@
+---
+- hosts: all
+  vars:
+    path_to_nginx_config: /etc/nginx/nginx.conf
+    path_to_nginx_sites_available: /etc/nginx/sites-available
+    path_to_nginx_sites_enabled: /etc/nginx/sites-enabled
+    path_to_nginx_sites: /etc/nginx/sites
+  tasks:
+    - name: Ensure nginx is at the latest version
+      apt: name=nginx state=latest
+      become: yes
+    - name: Start nginx
+      service:
+        name: nginx
+        state: started
+      become: yes
+    - name: Copy the nginx initial config file
+      copy:
+        src: "${PATH_TO_TEMPLATE_CONFIG}"
+        dest: "{{ path_to_nginx_config }}"
+      become: yes
+
+    - name: Ensures "{{ path_to_nginx_sites }}" directory exists
+      file: path="{{ path_to_nginx_sites }}" state=directory
+    - name: Ensures "{{ path_to_nginx_sites_available }}" directory exists
+      local_action: stat path="{{ path_to_nginx_sites_available }}"
+      register: sites_available
+    - name: Copy the content of sites available folder
+      when: sites_available.stat.exists
+      copy:
+        src: "{{ path_to_nginx_sites_available }}/"
+        dest: "{{ path_to_nginx_sites }}"
+        directory_mode: yes
+        remote_src: yes
+    - name: Drop sites available directory
+      when: sites_available.stat.exists
+      file:
+        path: "{{ path_to_nginx_sites_available }}"
+        state: absent
+    - name: Ensures "{{ path_to_nginx_sites_enabled }}" directory exists
+      local_action: stat path="{{ path_to_nginx_sites_enabled }}"
+      register: sites_eanbled
+    - name: Drop sites enabled directory
+      when: sites_eanbled.stat.exists
+      file:
+        path: "{{ path_to_nginx_sites_enabled }}"
+        state: absent
+
+    - name: Copy the nginx demo site config
+      copy:
+        src: "${PATH_TO_TEMPLATE_DEFAULT}"
+        dest: "{{ path_to_nginx_sites }}/default"
+      become: yes
+
+    - name: Restart nginx
+      service:
+        name: nginx
+        state: restarted
+      become: yes

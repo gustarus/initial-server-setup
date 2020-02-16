@@ -1,0 +1,33 @@
+"use strict";
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const path = __importStar(require("path"));
+const resolvePackagePath_1 = __importDefault(require("./helpers/resolvePackagePath"));
+exports.PATH_TO_ROOT = resolvePackagePath_1.default(__dirname);
+exports.PATH_TO_PACKAGE = path.resolve(exports.PATH_TO_ROOT, 'package.json');
+exports.PATH_TO_RUNTIME = path.resolve(exports.PATH_TO_ROOT, 'runtime');
+exports.PATH_TO_PLAYBOOKS = path.resolve(exports.PATH_TO_ROOT, 'playbooks');
+exports.PATH_TO_PLAYBOOK_SETUP_DOCKER = path.resolve(exports.PATH_TO_PLAYBOOKS, 'setup-docker', 'playbook.yml');
+exports.PATH_TO_PLAYBOOK_SETUP_NGINX = path.resolve(exports.PATH_TO_PLAYBOOKS, 'setup-nginx', 'playbook.yml');
+exports.PATH_TO_PLAYBOOK_SETUP_UBUNTU = path.resolve(exports.PATH_TO_PLAYBOOKS, 'setup-ubuntu', 'playbook.yml');
+exports.PATH_TO_TEMPLATES = path.resolve(exports.PATH_TO_ROOT, 'templates');
+exports.PATH_TO_TEMPLATE_NGINX_CONFIG = path.resolve(exports.PATH_TO_TEMPLATES, 'nginx.conf');
+exports.PATH_TO_TEMPLATE_NGINX_DEFAULT = path.resolve(exports.PATH_TO_TEMPLATES, 'default.conf');
+exports.EXAMPLE_HOST = '192.168.1.1';
+exports.DEFAULT_USER_ROOT = 'root';
+exports.DEFAULT_USER_TARGET = 'default';
+exports.DEFAULT_PATH_KEY = '~/.ssh/id_rsa.pub';
+exports.OPTION_DESCRIPTION_HOST = 'Remote server `ip` or `domain`';
+exports.OPTION_DESCRIPTION_ROOT_USER = 'Remote `sudo` user to login into clean server';
+exports.OPTION_DESCRIPTION_ROOT_KEY = 'Remote `sudo` user key to install inside remote server';
+exports.OPTION_DESCRIPTION_TARGET_USER = 'Remote `admin` user to create with `sudo` privileges';
+exports.OPTION_DESCRIPTION_TARGET_KEY = 'Remote `admin` user key to install inside remote server';
