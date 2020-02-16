@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "initial-server-setup",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Tool to setup clean ubuntu 18.04 initially with docker and nginx under the hood via ansible playbooks",
   "scripts": {
     "watch": "./node_modules/.bin/tsc -w",
