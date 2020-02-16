@@ -33,7 +33,11 @@ export default function setup(program: Command) {
       const exec = resolveExecutable();
 
       // install root key on the remote server
-      execSyncProgressDisplay(exec, 'setup-key', { host, user: rootUser, key: rootKey });
+      execSyncProgressDisplay(exec, 'setup-key', {
+        host,
+        'root-user': rootUser,
+        'root-key': rootKey,
+      });
 
       // setup ubuntu initially
       execSyncProgressDisplay(exec, 'setup-ubuntu', {
@@ -45,10 +49,19 @@ export default function setup(program: Command) {
       });
 
       // setup docker with demo nginx container
-      execSyncProgressDisplay(exec, 'setup-docker', { host, user: rootUser, key: rootKey });
+      execSyncProgressDisplay(exec, 'setup-docker', {
+        host,
+        'root-user': rootUser,
+        'root-key': rootKey,
+        'target-user': targetUser,
+      });
 
       // setup nginx with demo site served from docker
-      execSyncProgressDisplay(exec, 'setup-nginx', { host, user: rootUser, key: rootKey });
+      execSyncProgressDisplay(exec, 'setup-nginx', {
+        host,
+        'root-user': rootUser,
+        'root-key': rootKey,
+      });
 
       displayCommandStep(cmd, colors.green.bold(`The setup has been completed: try to open '${host}:8000' in your browser`));
       displayCommandDone(cmd);

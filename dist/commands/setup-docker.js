@@ -22,20 +22,23 @@ function setup(program) {
         .command('setup-docker')
         .description('Setup docker inside remote server')
         .requiredOption(`-t, --host <${constants_1.EXAMPLE_HOST}>`, constants_1.OPTION_DESCRIPTION_HOST)
-        .requiredOption(`-u, --user <${constants_1.DEFAULT_USER_ROOT}>`, constants_1.OPTION_DESCRIPTION_ROOT_USER, constants_1.DEFAULT_USER_ROOT)
-        .requiredOption(`-k, --key <${constants_1.DEFAULT_PATH_KEY}>`, constants_1.OPTION_DESCRIPTION_ROOT_KEY, constants_1.DEFAULT_PATH_KEY)
+        .requiredOption(`-u, --root-user <${constants_1.DEFAULT_USER_ROOT}>`, constants_1.OPTION_DESCRIPTION_ROOT_USER, constants_1.DEFAULT_USER_ROOT)
+        .requiredOption(`-k, --root-key <${constants_1.DEFAULT_PATH_KEY}>`, constants_1.OPTION_DESCRIPTION_ROOT_KEY, constants_1.DEFAULT_PATH_KEY)
+        .requiredOption(`-U, --target-user <${constants_1.DEFAULT_USER_TARGET}>`, constants_1.OPTION_DESCRIPTION_TARGET_USER, constants_1.DEFAULT_USER_TARGET)
         .action(async (cmd) => {
         displayCommandGreetings_1.default(cmd);
-        const { host, user, key } = cmd;
-        const keyPair = resolveKeysPair_1.default(key);
+        const { host, rootUser, rootKey, targetUser } = cmd;
+        const rootKeyPair = resolveKeysPair_1.default(rootKey);
         // create ansible playbook from the template
         const pathToRuntimePlaybook = path.resolve(constants_1.PATH_TO_RUNTIME, 'docker.playbook.yml');
-        createFileFromTemplate_1.default(constants_1.PATH_TO_PLAYBOOK_SETUP_DOCKER, pathToRuntimePlaybook);
+        createFileFromTemplate_1.default(constants_1.PATH_TO_PLAYBOOK_SETUP_DOCKER, pathToRuntimePlaybook, {
+            USER: targetUser,
+        });
         // execute ansible playbook to setup ubuntu
         execSyncProgressDisplay_1.default('ansible-playbook', {
             inventory: `${host},`,
-            user,
-            'private-key': keyPair.private,
+            user: rootUser,
+            'private-key': rootKeyPair.private,
         }, pathToRuntimePlaybook);
         displayCommandDone_1.default(cmd);
     });

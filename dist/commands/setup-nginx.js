@@ -22,13 +22,12 @@ function setup(program) {
         .command('setup-nginx')
         .description('Setup nginx inside remote server')
         .requiredOption(`-t, --host <${constants_1.EXAMPLE_HOST}>`, constants_1.OPTION_DESCRIPTION_HOST)
-        .requiredOption(`-u, --user <${constants_1.DEFAULT_USER_ROOT}>`, constants_1.OPTION_DESCRIPTION_ROOT_USER, constants_1.DEFAULT_USER_ROOT)
-        .requiredOption(`-k, --key <${constants_1.DEFAULT_PATH_KEY}>`, constants_1.OPTION_DESCRIPTION_ROOT_KEY, constants_1.DEFAULT_PATH_KEY)
+        .requiredOption(`-u, --root-user <${constants_1.DEFAULT_USER_ROOT}>`, constants_1.OPTION_DESCRIPTION_ROOT_USER, constants_1.DEFAULT_USER_ROOT)
+        .requiredOption(`-k, --root-key <${constants_1.DEFAULT_PATH_KEY}>`, constants_1.OPTION_DESCRIPTION_ROOT_KEY, constants_1.DEFAULT_PATH_KEY)
         .action(async (cmd) => {
         displayCommandGreetings_1.default(cmd);
-        const { host, user, key } = cmd;
-        const keyPair = resolveKeysPair_1.default(key);
-        const pathToSiteRoot = `/home/${user}/www/default`;
+        const { host, rootUser, rootKey } = cmd;
+        const rootKeyPair = resolveKeysPair_1.default(rootKey);
         // create nginx config from template
         const pathToRuntimeConfig = path.resolve(constants_1.PATH_TO_RUNTIME, 'nginx.conf');
         createFileFromTemplate_1.default(constants_1.PATH_TO_TEMPLATE_NGINX_CONFIG, pathToRuntimeConfig);
@@ -44,8 +43,8 @@ function setup(program) {
         // execute ansible playbook to setup ubuntu
         execSyncProgressDisplay_1.default('ansible-playbook', {
             inventory: `${host},`,
-            user,
-            'private-key': keyPair.private,
+            user: rootUser,
+            'private-key': rootKeyPair.private,
         }, pathToRuntimePlaybook);
         displayCommandDone_1.default(cmd);
     });

@@ -2,6 +2,7 @@
 - hosts: all
   become: true
   vars:
+    user: ${USER}
     default_container_name: nginx-demo
     default_container_image: nginxdemos/hello
 
@@ -25,6 +26,16 @@
     - name: Install docker module for python
       pip:
         name: docker
+
+    - name: Ensure group "docker" exists
+      group:
+        name: docker
+        state: present
+    - name: Adding user "{{ user }}" to the docker group
+      user:
+        name: "{{ user }}"
+        groups: docker
+        append: yes
 
     - name: Pull default docker image
       docker_image:

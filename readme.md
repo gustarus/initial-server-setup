@@ -63,3 +63,9 @@ Command | Description
 `setup-ubuntu` [options] | Do initial ubuntu setup.
 `setup-docker` [options] | Do docker-ce setup and run `hello` container.
 `setup-nginx` [options] | Do nginx setup and run `hello` server for the container. 
+
+### Install additional ssh keys to remote server
+Copy and paste your ssh public key from control node via the following command (do not forget to use `-f` flag).
+```bash
+ssh-copy-id -f -i ~/.ssh/different-key.pub 123.456.78.90
+```

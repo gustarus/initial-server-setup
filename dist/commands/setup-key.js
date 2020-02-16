@@ -13,14 +13,14 @@ function setup(program) {
         .command('setup-key')
         .description('Install public key inside remote server')
         .requiredOption(`-t, --host <${constants_1.EXAMPLE_HOST}>`, constants_1.OPTION_DESCRIPTION_HOST)
-        .requiredOption(`-u, --user <${constants_1.DEFAULT_USER_ROOT}>`, constants_1.OPTION_DESCRIPTION_ROOT_USER, constants_1.DEFAULT_USER_ROOT)
-        .requiredOption(`-k, --key <${constants_1.DEFAULT_PATH_KEY}>`, constants_1.OPTION_DESCRIPTION_ROOT_KEY, constants_1.DEFAULT_PATH_KEY)
+        .requiredOption(`-u, --root-user <${constants_1.DEFAULT_USER_ROOT}>`, constants_1.OPTION_DESCRIPTION_ROOT_USER, constants_1.DEFAULT_USER_ROOT)
+        .requiredOption(`-k, --root-key <${constants_1.DEFAULT_PATH_KEY}>`, constants_1.OPTION_DESCRIPTION_ROOT_KEY, constants_1.DEFAULT_PATH_KEY)
         .action(async (cmd) => {
         displayCommandGreetings_1.default(cmd);
-        const { host, user, key } = cmd;
-        const keyPair = resolveKeysPair_1.default(key);
+        const { host, rootUser, rootKey } = cmd;
+        const rootKeyPair = resolveKeysPair_1.default(rootKey);
         // ssh-copy-id key to the target key
-        execSyncProgressDisplay_1.default('ssh-copy-id', { i: keyPair.public }, `${user}@${host}`);
+        execSyncProgressDisplay_1.default('ssh-copy-id', { i: rootKeyPair.public }, `${rootUser}@${host}`);
         displayCommandDone_1.default(cmd);
     });
 }

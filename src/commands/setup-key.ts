@@ -17,15 +17,15 @@ export default function setup(program: Command) {
     .command('setup-key')
     .description('Install public key inside remote server')
     .requiredOption(`-t, --host <${EXAMPLE_HOST}>`, OPTION_DESCRIPTION_HOST)
-    .requiredOption(`-u, --user <${DEFAULT_USER_ROOT}>`, OPTION_DESCRIPTION_ROOT_USER, DEFAULT_USER_ROOT)
-    .requiredOption(`-k, --key <${DEFAULT_PATH_KEY}>`, OPTION_DESCRIPTION_ROOT_KEY, DEFAULT_PATH_KEY)
+    .requiredOption(`-u, --root-user <${DEFAULT_USER_ROOT}>`, OPTION_DESCRIPTION_ROOT_USER, DEFAULT_USER_ROOT)
+    .requiredOption(`-k, --root-key <${DEFAULT_PATH_KEY}>`, OPTION_DESCRIPTION_ROOT_KEY, DEFAULT_PATH_KEY)
     .action(async (cmd) => {
       displayCommandGreetings(cmd);
-      const { host, user, key } = cmd;
-      const keyPair = resolveKeysPair(key);
+      const { host, rootUser, rootKey } = cmd;
+      const rootKeyPair = resolveKeysPair(rootKey);
 
       // ssh-copy-id key to the target key
-      execSyncProgressDisplay('ssh-copy-id', { i: keyPair.public }, `${user}@${host}`);
+      execSyncProgressDisplay('ssh-copy-id', { i: rootKeyPair.public }, `${rootUser}@${host}`);
 
       displayCommandDone(cmd);
     });
