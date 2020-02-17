@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "initial-server-setup",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Tool to setup clean ubuntu 18.04 initially with docker and nginx under the hood via ansible playbooks",
   "scripts": {
     "watch": "./node_modules/.bin/tsc -w",
@@ -21,17 +21,11 @@
   "author": "Pavel Kondratenko <iam@kondratenko.me>",
   "license": "MIT",
   "devDependencies": {
-    "@babel/cli": "^7.8.3",
-    "@babel/core": "^7.8.3",
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/preset-env": "^7.8.3",
-    "@babel/preset-typescript": "^7.8.3",
     "@types/commander": "^2.12.2",
     "@types/fs-extra": "^8.0.1",
     "@types/inquirer": "^6.5.0",
     "@types/node": "^13.5.0",
     "@types/yargs": "^15.0.1",
-    "babel-runtime": "^6.26.0",
     "typescript": "^3.7.5"
   },
   "dependencies": {
