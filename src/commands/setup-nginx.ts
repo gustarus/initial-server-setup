@@ -17,6 +17,7 @@ import {
 } from '../constants';
 import * as path from 'path';
 import resolveKeysPair from '../helpers/resolveKeysPair';
+import createPlaybookCommand from '../helpers/createPlaybookCommand';
 
 export default function setup(program: Command) {
   program
@@ -46,11 +47,7 @@ export default function setup(program: Command) {
       });
 
       // execute ansible playbook to setup ubuntu
-      execSyncProgressDisplay('ansible-playbook', {
-        inventory: `${host},`,
-        user: rootUser,
-        'private-key': rootKeyPair.private,
-      }, pathToRuntimePlaybook);
+      execSyncProgressDisplay(createPlaybookCommand(host, rootUser, rootKeyPair.private, pathToRuntimePlaybook));
 
       displayCommandDone(cmd);
     });

@@ -21,9 +21,10 @@ To add more ssh keys to login from your another control nodes [you have to insta
    7. setup [ufw tool](https://help.ubuntu.com/community/UFW) to allow **only** ssh connections and some ports (`http:80`, `https:443`, `:8000`).
 2. [Install and configure docker-ce toolbox](https://www.digitalocean.com/community/tutorials/how-to-use-ansible-to-install-and-set-up-docker-on-ubuntu-18-04) and do post-installation steps:
    1. install [docker](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04) to manage containers;
-   2. add user `default` to docker administrators group;
-   3. pull hello nginx container [nginxdemos/hello](https://hub.docker.com/r/nginxdemos/hello/);
-   4. run hello container on `:8001` port inside `localhost` (the container isn't published to the internet yet on this step).
+   2. configure crontab for `root` to run `docker system prune --all --force` every night to clean detached images and other docker stuff to free space after deployments.
+   3. add user `default` to docker administrators group;
+   4. pull hello nginx container [nginxdemos/hello](https://hub.docker.com/r/nginxdemos/hello/);
+   5. run hello container on `:8001` port inside `localhost` (the container isn't published to the internet yet on this step).
 3. [Install and configure nginx](https://code-maven.com/install-and-configure-nginx-using-ansible):
    1. install [nginx](https://www.nginx.com) to manage web servers;
    2. configure nginx with [default configuration](templates/nginx.conf);
@@ -78,7 +79,7 @@ Option | Default | Required | Description
 ### Existed commands in the tool
 You can use any command separately and every command has it own `--help`.
 ```bash
-initial-server-setup setup --help
+initial-server-setup setup-docker --help
 ```
 
 Command | Description 

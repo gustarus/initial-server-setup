@@ -23,10 +23,11 @@
     - name: Ensures "{{ path_to_nginx_sites }}" directory exists
       file: path="{{ path_to_nginx_sites }}" state=directory
     - name: Ensures "{{ path_to_nginx_sites_available }}" directory exists
-      local_action: stat path="{{ path_to_nginx_sites_available }}"
+      stat:
+        path: "{{ path_to_nginx_sites_available }}"
       register: sites_available
     - name: Copy the content of sites available folder
-      when: sites_available.stat.exists
+      when: sites_available.stat.isdir is defined and sites_available.stat.isdir
       copy:
         src: "{{ path_to_nginx_sites_available }}/"
         dest: "{{ path_to_nginx_sites }}"
@@ -38,10 +39,11 @@
         path: "{{ path_to_nginx_sites_available }}"
         state: absent
     - name: Ensures "{{ path_to_nginx_sites_enabled }}" directory exists
-      local_action: stat path="{{ path_to_nginx_sites_enabled }}"
+      stat:
+        path: "{{ path_to_nginx_sites_enabled }}"
       register: sites_eanbled
     - name: Drop sites enabled directory
-      when: sites_eanbled.stat.exists
+      when: sites_eanbled.stat.isdir is defined and sites_eanbled.stat.isdir
       file:
         path: "{{ path_to_nginx_sites_enabled }}"
         state: absent

@@ -19,6 +19,13 @@ function setup(program) {
         .requiredOption(`-k, --root-key <${constants_1.DEFAULT_PATH_KEY}>`, constants_1.OPTION_DESCRIPTION_ROOT_KEY, constants_1.DEFAULT_PATH_KEY)
         .requiredOption(`-U, --target-user <${constants_1.DEFAULT_USER_TARGET}>`, constants_1.OPTION_DESCRIPTION_TARGET_USER, constants_1.DEFAULT_USER_TARGET)
         .requiredOption(`-K, --target-key <${constants_1.DEFAULT_PATH_KEY}>`, constants_1.OPTION_DESCRIPTION_TARGET_KEY, constants_1.DEFAULT_PATH_KEY)
+        .option('--with-crontab-prune', constants_1.OPTION_DESCRIPTION_WITH_CRONTAB_PRUNE)
+        .option('--crontab-prune-command <path>', constants_1.OPTION_DESCRIPTION_CRONTAB_PRUNE_COMMAND)
+        .option('--with-docker-group', constants_1.OPTION_DESCRIPTION_WITH_DOCKER_GROUP)
+        .option('--docker-group-user <user>', constants_1.OPTION_DESCRIPTION_DOCKER_GROUP_USER)
+        .option('--with-default-container', constants_1.OPTION_DESCRIPTION_WITH_DEFAULT_CONTAINER)
+        .option('--default-container-name <name>', constants_1.OPTION_DESCRIPTION_DEFAULT_CONTAINER_NAME)
+        .option('--default-container-image <image>', constants_1.OPTION_DESCRIPTION_DEFAULT_CONTAINER_IMAGE)
         .action(async (cmd) => {
         displayCommandGreetings_1.default(cmd);
         const { host, rootUser, rootKey, targetUser, targetKey } = cmd;
@@ -38,11 +45,18 @@ function setup(program) {
             'target-key': targetKey,
         });
         // setup docker with demo nginx container
+        const { withCrontabPrune, crontabPruneCommand, withDockerGroup, dockerGroupUser, withDefaultContainer, defaultContainerName, defaultContainerImage } = cmd;
         execSyncProgressDisplay_1.default(exec, 'setup-docker', {
             host,
-            'root-user': rootUser,
-            'root-key': rootKey,
-            'target-user': targetUser,
+            rootUser,
+            rootKey,
+            withCrontabPrune,
+            crontabPruneCommand,
+            withDockerGroup,
+            dockerGroupUser: dockerGroupUser || targetUser,
+            withDefaultContainer,
+            defaultContainerName,
+            defaultContainerImage
         });
         // setup nginx with demo site served from docker
         execSyncProgressDisplay_1.default(exec, 'setup-nginx', {

@@ -17,6 +17,7 @@ const createFileFromTemplate_1 = __importDefault(require("../helpers/createFileF
 const constants_1 = require("../constants");
 const path = __importStar(require("path"));
 const resolveKeysPair_1 = __importDefault(require("../helpers/resolveKeysPair"));
+const createPlaybookCommand_1 = __importDefault(require("../helpers/createPlaybookCommand"));
 function setup(program) {
     program
         .command('setup-ubuntu')
@@ -38,11 +39,7 @@ function setup(program) {
             PUBLIC_KEY: targetKeyPair.public,
         });
         // execute ansible playbook to setup ubuntu
-        execSyncProgressDisplay_1.default('ansible-playbook', {
-            inventory: `${host},`,
-            user: rootUser,
-            'private-key': rootKeyPair.private,
-        }, pathToRuntimePlaybook);
+        execSyncProgressDisplay_1.default(createPlaybookCommand_1.default(host, rootUser, rootKeyPair.private, pathToRuntimePlaybook));
         displayCommandDone_1.default(cmd);
     });
 }

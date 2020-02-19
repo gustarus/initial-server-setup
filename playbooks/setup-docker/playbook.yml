@@ -2,9 +2,15 @@
 - hosts: all
   become: true
   vars:
-    user: ${USER}
-    default_container_name: nginx-demo
-    default_container_image: nginxdemos/hello
+    crontab_prune_enable: "${CRONTAB_PRUNE_ENABLE}"
+    crontab_prune_command: "${CRONTAB_PRUNE_COMMAND}"
+
+    docker_group_enable: "${DOCKER_GROUP_ENABLE}"
+    docker_group_user: "${DOCKER_GROUP_USER}"
+
+    default_container_enable: "${DEFAULT_CONTAINER_ENABLE}"
+    default_container_name: "${DEFAULT_CONTAINER_NAME}"
+    default_container_image: "${DEFAULT_CONTAINER_IMAGE}"
 
   tasks:
     - name: Install aptitude using apt
@@ -27,21 +33,33 @@
       pip:
         name: docker
 
+    - name: Add crontab command to prune docker all unassociated data
+      when: crontab_prune_enable|bool == True
+      cron:
+        name: "docker system prune"
+        minute: "0"
+        hour: "1"
+        job: "{{ crontab_prune_command }} > /dev/null"
+
     - name: Ensure group "docker" exists
+      when: docker_group_enable|bool == True
       group:
         name: docker
         state: present
-    - name: Adding user "{{ user }}" to the docker group
+    - name: Adding user "{{ docker_group_user }}" to the docker group
+      when: docker_group_enable|bool == True
       user:
-        name: "{{ user }}"
+        name: "{{ docker_group_user }}"
         groups: docker
         append: yes
 
     - name: Pull default docker image
+      when: default_container_enable|bool == True
       docker_image:
         name: "{{ default_container_image }}"
         source: pull
     - name: Create default container
+      when: default_container_enable|bool == True
       docker_container:
         name: "{{ default_container_name }}"
         image: "{{ default_container_image }}"
