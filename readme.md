@@ -1,27 +1,52 @@
 Initial setup tool for `ubuntu 18.04` remote servers based on `ansible-playbook`.
-To run this tool you have to take a look at the requirements below.
+To run this tool you have to take a look at [the requirements below](https://github.com/gustarus/initial-server-setup#which-requirements-does-this-tool-have).
 
 ## What does this tool do?
-All this steps will be produced on your remote server.
-1. [Initial ubuntu server configuration](https://www.digitalocean.com/community/tutorials/how-to-use-ansible-to-automate-initial-server-setup-on-ubuntu-18-04) to create new user `default` with your public ssh key, disable ssh root login with password and setup [ufw tool](https://help.ubuntu.com/community/UFW) to allow **only** ssh connections and some ports (`http:80`, `https:443`, `:8000`).
-2. [Install and configure docker-ce toolbox](https://www.digitalocean.com/community/tutorials/how-to-use-ansible-to-install-and-set-up-docker-on-ubuntu-18-04) and run [nginxdemos/hello](https://hub.docker.com/r/nginxdemos/hello/) container on `:8001` port inside `localhost`.
-3. [Install and configure nginx](https://code-maven.com/install-and-configure-nginx-using-ansible) with [default configuration](templates/nginx.conf) and [default server](templates/default.conf) and proxy all requests from public `:8000` port to the [nginxdemos/hello](https://hub.docker.com/r/nginxdemos/hello/) container.
+All this steps will be produced on your remote server in **default** configuration.
 
-As the result you will have configured web server to run docker containers inside.
+```bash
+initial-server-setup setup --host 123.456.78.90 
+```
+
+⚠️ **Be careful**: after this steps you will be able to login **only** with passed ssh keys (without password) with `default` or `root` users.
+To add more ssh keys to login from your another control nodes [you have to install those ssh keys](https://github.com/gustarus/initial-server-setup#install-additional-ssh-keys-to-remote-server) before. 
+
+1. [Initial ubuntu server configuration](https://www.digitalocean.com/community/tutorials/how-to-use-ansible-to-automate-initial-server-setup-on-ubuntu-18-04):
+1. 1. install [curl](https://www.tutorialspoint.com/unix_commands/curl.htm) for transferring data with urls;
+1. 2. install [vim](https://www.computerhope.com/unix/vim.htm) text editor to edit text files;
+1. 3. install [ufw](https://help.ubuntu.com/community/UFW) firewall to protect ports;
+1. 4. install [git](https://git-scm.com/book/en/v2) version control to manage repositories.
+1. 5. create new user `default` with sudo privileges and ability to login to remote server with your local public ssh key (`~/.ssh/id_rsa.pub`);
+1. 6. disable [remote root login with password](https://ubuntuforums.org/showthread.php?t=2359172) with `PermitRootLogin prohibit-password`;
+1. 7. setup [ufw tool](https://help.ubuntu.com/community/UFW) to allow **only** ssh connections and some ports (`http:80`, `https:443`, `:8000`).
+2. [Install and configure docker-ce toolbox](https://www.digitalocean.com/community/tutorials/how-to-use-ansible-to-install-and-set-up-docker-on-ubuntu-18-04) and do post-installation steps:
+2. 1. install [docker](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04) to manage containers;
+2. 2. add user `default` to docker administrators group;
+2. 3. pull hello nginx container [nginxdemos/hello](https://hub.docker.com/r/nginxdemos/hello/);
+2. 4. run hello container on `:8001` port inside `localhost` (the container isn't published to the internet yet on this step).
+3. [Install and configure nginx](https://code-maven.com/install-and-configure-nginx-using-ansible):
+3. 1. install [nginx](https://www.nginx.com) to manage web servers;
+3. 2. configure nginx with [default configuration](templates/nginx.conf);
+3. 3. add [default server](templates/default.conf) to proxy all requests from public `:8000` port to the nginx hello container.
+3. 4. restart nginx.
+
+As the result you will get configured web server with nginx layer to manage web servers and with docker to run containers inside remote machine.
 Also you have to be able to see the result of [nginxdemos/hello](https://hub.docker.com/r/nginxdemos/hello/) container on `your-domain.com:8000`.
+And you will be able to login to your remote server with `ssh <default|root>@<remote-server-ip|remote-server-domain>`. 
 
 ![demo](docs/result.png)
 
 ## Which requirements does this tool have?
 ### Server node requirements
 Server node is a node where you want to configure the environment.
-- [Ubuntu 18.04](http://releases.ubuntu.com/18.04/).
+- [ubuntu 18.04](http://releases.ubuntu.com/18.04/).
 
 ### Control node requirements
 Control node is a node from what you are going to run setup tool.
-- [Node.js](https://nodejs.org/en/download/)@10.16.0 to run this tool from console (you can use [nvm](https://github.com/nvm-sh/nvm)).
-- [SSH Copy id](https://www.ssh.com/ssh/copy-id) to install your public ssh key inside the remote server.
-- [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) to run playbooks inside the remote server.
+- [ssh](https://www.ssh.com/ssh/command/) tool with [ssh copy id](https://www.ssh.com/ssh/copy-id) to install your public ssh key inside the remote server;
+- [generated ssh keys](https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) to connect to your remote server;
+- [node.js 10](https://nodejs.org/en/download/) to run this tool from console (you can use [nvm](https://github.com/nvm-sh/nvm));
+- [ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) to run playbooks inside the remote server.
 
 ## How to install this tool?
 ```bash
@@ -62,10 +87,10 @@ Command | Description
 `setup-key` [options] | Install local public key to remote host.
 `setup-ubuntu` [options] | Do initial ubuntu setup.
 `setup-docker` [options] | Do docker-ce setup and run `hello` container.
-`setup-nginx` [options] | Do nginx setup and run `hello` server for the container. 
+`setup-nginx` [options] | Do nginx setup and run `hello` server for the `hello` container. 
 
 ### Install additional ssh keys to remote server
-Copy and paste your ssh public key from control node via the following command (do not forget to use `-f` flag).
+Copy and paste your ssh public key from another control node to what you want to give access via the following command (do not forget to use `-f` flag).
 ```bash
-ssh-copy-id -f -i ~/.ssh/different-key.pub 123.456.78.90
+ssh-copy-id -f -i ~/.ssh/different-key.pub <remote-server-ip|remote-server-domain>
 ```

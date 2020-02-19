@@ -4,7 +4,7 @@
   vars:
     create_user: ${CREATE_USER}
     copy_local_key: "{{ lookup('file', '${PUBLIC_KEY}') }}"
-    sys_packages: [ 'curl', 'vim', 'git', 'ufw']
+    sys_packages: [ 'curl', 'vim', 'git', 'ufw' ]
 
   tasks:
     - name: Install Prerequisites
