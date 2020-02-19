@@ -12,23 +12,23 @@ initial-server-setup setup --host 123.456.78.90
 To add more ssh keys to login from your another control nodes [you have to install those ssh keys](https://github.com/gustarus/initial-server-setup#install-additional-ssh-keys-to-remote-server) before. 
 
 1. [Initial ubuntu server configuration](https://www.digitalocean.com/community/tutorials/how-to-use-ansible-to-automate-initial-server-setup-on-ubuntu-18-04):
-1. 1. install [curl](https://www.tutorialspoint.com/unix_commands/curl.htm) for transferring data with urls;
-1. 2. install [vim](https://www.computerhope.com/unix/vim.htm) text editor to edit text files;
-1. 3. install [ufw](https://help.ubuntu.com/community/UFW) firewall to protect ports;
-1. 4. install [git](https://git-scm.com/book/en/v2) version control to manage repositories.
-1. 5. create new user `default` with sudo privileges and ability to login to remote server with your local public ssh key (`~/.ssh/id_rsa.pub`);
-1. 6. disable [remote root login with password](https://ubuntuforums.org/showthread.php?t=2359172) with `PermitRootLogin prohibit-password`;
-1. 7. setup [ufw tool](https://help.ubuntu.com/community/UFW) to allow **only** ssh connections and some ports (`http:80`, `https:443`, `:8000`).
+   1. install [curl](https://www.tutorialspoint.com/unix_commands/curl.htm) for transferring data with urls;
+   2. install [vim](https://www.computerhope.com/unix/vim.htm) text editor to edit text files;
+   3. install [ufw](https://help.ubuntu.com/community/UFW) firewall to protect ports;
+   4. install [git](https://git-scm.com/book/en/v2) version control to manage repositories.
+   5. create new user `default` with sudo privileges and ability to login to remote server with your local public ssh key (`~/.ssh/id_rsa.pub`);
+   6. disable [remote root login with password](https://ubuntuforums.org/showthread.php?t=2359172) with `PermitRootLogin prohibit-password`;
+   7. setup [ufw tool](https://help.ubuntu.com/community/UFW) to allow **only** ssh connections and some ports (`http:80`, `https:443`, `:8000`).
 2. [Install and configure docker-ce toolbox](https://www.digitalocean.com/community/tutorials/how-to-use-ansible-to-install-and-set-up-docker-on-ubuntu-18-04) and do post-installation steps:
-2. 1. install [docker](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04) to manage containers;
-2. 2. add user `default` to docker administrators group;
-2. 3. pull hello nginx container [nginxdemos/hello](https://hub.docker.com/r/nginxdemos/hello/);
-2. 4. run hello container on `:8001` port inside `localhost` (the container isn't published to the internet yet on this step).
+   1. install [docker](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04) to manage containers;
+   2. add user `default` to docker administrators group;
+   3. pull hello nginx container [nginxdemos/hello](https://hub.docker.com/r/nginxdemos/hello/);
+   4. run hello container on `:8001` port inside `localhost` (the container isn't published to the internet yet on this step).
 3. [Install and configure nginx](https://code-maven.com/install-and-configure-nginx-using-ansible):
-3. 1. install [nginx](https://www.nginx.com) to manage web servers;
-3. 2. configure nginx with [default configuration](templates/nginx.conf);
-3. 3. add [default server](templates/default.conf) to proxy all requests from public `:8000` port to the nginx hello container.
-3. 4. restart nginx.
+   1. install [nginx](https://www.nginx.com) to manage web servers;
+   2. configure nginx with [default configuration](templates/nginx.conf);
+   3. add [default server](templates/default.conf) to proxy all requests from public `:8000` port to the nginx hello container.
+   4. restart nginx.
 
 As the result you will get configured web server with nginx layer to manage web servers and with docker to run containers inside remote machine.
 Also you have to be able to see the result of [nginxdemos/hello](https://hub.docker.com/r/nginxdemos/hello/) container on `your-domain.com:8000`.
