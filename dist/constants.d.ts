@@ -2,6 +2,7 @@ export declare const PATH_TO_ROOT: string;
 export declare const PATH_TO_PACKAGE: string;
 export declare const PATH_TO_RUNTIME: string;
 export declare const PATH_TO_PLAYBOOKS: string;
+export declare const PATH_TO_PLAYBOOK_SETUP_CERTBOT: string;
 export declare const PATH_TO_PLAYBOOK_SETUP_DOCKER: string;
 export declare const PATH_TO_PLAYBOOK_SETUP_NGINX: string;
 export declare const PATH_TO_PLAYBOOK_SETUP_UBUNTU: string;

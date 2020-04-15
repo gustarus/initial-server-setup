@@ -9,11 +9,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const path = __importStar(require("path"));
 function resolvePathFromHome(source) {
-    if (source[0] === '~') {
+    if (source.match(/^~/)) {
         if (!process.env.HOME) {
             throw new Error('Unable to resolve path to home');
         }
-        return path.resolve(process.env.HOME, source.slice(1));
+        return path.resolve(process.env.HOME, source.replace(/^~[\\/]+/, ''));
     }
     return path.resolve(source);
 }

@@ -64,6 +64,12 @@ function setup(program) {
             'root-user': rootUser,
             'root-key': rootKey,
         });
+        // install certbot tool to manage certificates
+        execSyncProgressDisplay_1.default(exec, 'setup-certbot', {
+            host,
+            'root-user': rootUser,
+            'root-key': rootKey,
+        });
         displayCommandStep_1.default(cmd, colors_1.default.green.bold(`The setup has been completed: try to open '${host}:8000' in your browser`));
         displayCommandDone_1.default(cmd);
     });

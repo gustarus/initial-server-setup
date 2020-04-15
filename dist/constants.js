@@ -16,6 +16,7 @@ exports.PATH_TO_ROOT = resolvePackagePath_1.default(__dirname);
 exports.PATH_TO_PACKAGE = path.resolve(exports.PATH_TO_ROOT, 'package.json');
 exports.PATH_TO_RUNTIME = path.resolve(exports.PATH_TO_ROOT, 'runtime');
 exports.PATH_TO_PLAYBOOKS = path.resolve(exports.PATH_TO_ROOT, 'playbooks');
+exports.PATH_TO_PLAYBOOK_SETUP_CERTBOT = path.resolve(exports.PATH_TO_PLAYBOOKS, 'setup-certbot', 'playbook.yml');
 exports.PATH_TO_PLAYBOOK_SETUP_DOCKER = path.resolve(exports.PATH_TO_PLAYBOOKS, 'setup-docker', 'playbook.yml');
 exports.PATH_TO_PLAYBOOK_SETUP_NGINX = path.resolve(exports.PATH_TO_PLAYBOOKS, 'setup-nginx', 'playbook.yml');
 exports.PATH_TO_PLAYBOOK_SETUP_UBUNTU = path.resolve(exports.PATH_TO_PLAYBOOKS, 'setup-ubuntu', 'playbook.yml');

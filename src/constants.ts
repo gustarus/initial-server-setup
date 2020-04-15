@@ -6,6 +6,7 @@ export const PATH_TO_PACKAGE = path.resolve(PATH_TO_ROOT, 'package.json');
 export const PATH_TO_RUNTIME = path.resolve(PATH_TO_ROOT, 'runtime');
 
 export const PATH_TO_PLAYBOOKS = path.resolve(PATH_TO_ROOT, 'playbooks');
+export const PATH_TO_PLAYBOOK_SETUP_CERTBOT = path.resolve(PATH_TO_PLAYBOOKS, 'setup-certbot', 'playbook.yml');
 export const PATH_TO_PLAYBOOK_SETUP_DOCKER = path.resolve(PATH_TO_PLAYBOOKS, 'setup-docker', 'playbook.yml');
 export const PATH_TO_PLAYBOOK_SETUP_NGINX = path.resolve(PATH_TO_PLAYBOOKS, 'setup-nginx', 'playbook.yml');
 export const PATH_TO_PLAYBOOK_SETUP_UBUNTU = path.resolve(PATH_TO_PLAYBOOKS, 'setup-ubuntu', 'playbook.yml');

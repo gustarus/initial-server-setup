@@ -4,6 +4,7 @@ import * as path from 'path';
 import program from 'commander';
 import colors from 'colors';
 import setup from './commands/setup';
+import setupCertbot from './commands/setup-certbot';
 import setupDocker from './commands/setup-docker';
 import setupKey from './commands/setup-key';
 import setupNginx from './commands/setup-nginx';
@@ -21,6 +22,7 @@ program
 
 // bind commands
 setup(program);
+setupCertbot(program);
 setupDocker(program);
 setupKey(program);
 setupNginx(program);

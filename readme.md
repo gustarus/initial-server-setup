@@ -89,6 +89,7 @@ Command | Description
 `setup-ubuntu` [options] | Do initial ubuntu setup.
 `setup-docker` [options] | Do docker-ce setup and run `hello` container.
 `setup-nginx` [options] | Do nginx setup and run `hello` server for the `hello` container. 
+`setup-certbot` [options] | Do certbot installation with `apache` and `nginx` modules. 
 
 ### Install additional ssh keys to remote server
 Copy and paste your ssh public key from another control node to what you want to give access via the following command (do not forget to use `-f` flag).

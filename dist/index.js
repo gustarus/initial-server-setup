@@ -15,6 +15,7 @@ const path = __importStar(require("path"));
 const commander_1 = __importDefault(require("commander"));
 const colors_1 = __importDefault(require("colors"));
 const setup_1 = __importDefault(require("./commands/setup"));
+const setup_certbot_1 = __importDefault(require("./commands/setup-certbot"));
 const setup_docker_1 = __importDefault(require("./commands/setup-docker"));
 const setup_key_1 = __importDefault(require("./commands/setup-key"));
 const setup_nginx_1 = __importDefault(require("./commands/setup-nginx"));
@@ -29,6 +30,7 @@ commander_1.default
     .description('Tool to setup clean ubuntu 18.04 initially with docker and nginx under the hood via ansible playbooks');
 // bind commands
 setup_1.default(commander_1.default);
+setup_certbot_1.default(commander_1.default);
 setup_docker_1.default(commander_1.default);
 setup_key_1.default(commander_1.default);
 setup_nginx_1.default(commander_1.default);

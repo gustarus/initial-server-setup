@@ -103,6 +103,15 @@ export default function setup(program: Command) {
         'root-key': rootKey,
       });
 
+
+      // install certbot tool to manage certificates
+      execSyncProgressDisplay(exec, 'setup-certbot', {
+        host,
+        'root-user': rootUser,
+        'root-key': rootKey,
+      });
+
+
       displayCommandStep(cmd, colors.green.bold(`The setup has been completed: try to open '${host}:8000' in your browser`));
       displayCommandDone(cmd);
     });
