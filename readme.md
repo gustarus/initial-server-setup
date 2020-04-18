@@ -29,7 +29,8 @@ To add more ssh keys to login from your another control nodes [you have to insta
    1. install [nginx](https://www.nginx.com) to manage web servers;
    2. configure nginx with [default configuration](templates/nginx.conf);
    3. add [default server](templates/default.conf) to proxy all requests from public `:8000` port to the nginx hello container.
-   4. restart nginx.
+3. [Install and configure certbot](https://certbot.eff.org/lets-encrypt/ubuntubionic-nginx):
+   1. install [certbot](https://certbot.eff.org/) to manage ssl certificates.
 
 As the result you will get configured web server with nginx layer to manage web servers and with docker to run containers inside remote machine.
 Also you have to be able to see the result of [nginxdemos/hello](https://hub.docker.com/r/nginxdemos/hello/) container on `your-domain.com:8000`.
@@ -89,7 +90,7 @@ Command | Description
 `setup-ubuntu` [options] | Do initial ubuntu setup.
 `setup-docker` [options] | Do docker-ce setup and run `hello` container.
 `setup-nginx` [options] | Do nginx setup and run `hello` server for the `hello` container. 
-`setup-certbot` [options] | Do certbot installation with `apache` and `nginx` modules. 
+`setup-certbot` [options] | Do certbot installation with `nginx` module. 
 
 ### Install additional ssh keys to remote server
 Copy and paste your ssh public key from another control node to what you want to give access via the following command (do not forget to use `-f` flag).

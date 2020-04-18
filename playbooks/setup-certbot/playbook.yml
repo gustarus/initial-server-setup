@@ -2,7 +2,7 @@
 - hosts: all
   become: true
   vars:
-    sys_packages: [ 'certbot', 'python-certbot-nginx', 'python-certbot-apache' ]
+    sys_packages: [ 'certbot', 'python-certbot-nginx' ]
 
   tasks:
     - name: Install aptitude using apt
