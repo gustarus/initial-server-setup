@@ -19,7 +19,7 @@ export default function setup(program: Command) {
     .requiredOption(`-t, --host <${EXAMPLE_HOST}>`, OPTION_DESCRIPTION_HOST)
     .requiredOption(`-u, --root-user <${DEFAULT_USER_ROOT}>`, OPTION_DESCRIPTION_ROOT_USER, DEFAULT_USER_ROOT)
     .requiredOption(`-k, --root-key <${DEFAULT_PATH_KEY}>`, OPTION_DESCRIPTION_ROOT_KEY, DEFAULT_PATH_KEY)
-    .action(async (cmd) => {
+    .action(async(cmd: Command) => {
       displayCommandGreetings(cmd);
       const { host, rootUser, rootKey } = cmd;
       const rootKeyPair = resolveKeysPair(rootKey);

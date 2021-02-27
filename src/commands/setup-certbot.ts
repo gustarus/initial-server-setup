@@ -16,7 +16,7 @@ import {
   PATH_TO_PLAYBOOK_SETUP_UBUNTU,
   PATH_TO_RUNTIME,
 } from '../constants';
-import * as path from 'path';
+import path from 'path';
 import resolveKeysPair from '../helpers/resolveKeysPair';
 import createPlaybookCommand from '../helpers/createPlaybookCommand';
 
@@ -27,7 +27,7 @@ export default function setup(program: Command) {
     .requiredOption(`-t, --host <${EXAMPLE_HOST}>`, OPTION_DESCRIPTION_HOST)
     .requiredOption(`-u, --root-user <${DEFAULT_USER_ROOT}>`, OPTION_DESCRIPTION_ROOT_USER, DEFAULT_USER_ROOT)
     .requiredOption(`-k, --root-key <${DEFAULT_PATH_KEY}>`, OPTION_DESCRIPTION_ROOT_KEY, DEFAULT_PATH_KEY)
-    .action(async (cmd) => {
+    .action(async(cmd: Command) => {
       displayCommandGreetings(cmd);
       const { host, rootUser, rootKey } = cmd;
       const rootKeyPair = resolveKeysPair(rootKey);

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import * as path from 'path';
+import path from 'path';
 import program from 'commander';
 import colors from 'colors';
 import setup from './commands/setup';

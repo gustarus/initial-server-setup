@@ -1,5 +1,5 @@
-import * as fs from 'fs';
-import * as path from 'path';
+import fs from 'fs';
+import path from 'path';
 import Package from '../models/Package';
 import { PATH_TO_PACKAGE, PATH_TO_ROOT } from '../constants';
 

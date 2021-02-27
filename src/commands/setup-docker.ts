@@ -18,9 +18,9 @@ import {
   OPTION_DESCRIPTION_WITH_DEFAULT_CONTAINER,
   OPTION_DESCRIPTION_WITH_DOCKER_GROUP,
   PATH_TO_PLAYBOOK_SETUP_DOCKER,
-  PATH_TO_RUNTIME
+  PATH_TO_RUNTIME,
 } from '../constants';
-import * as path from 'path';
+import path from 'path';
 import resolveKeysPair from '../helpers/resolveKeysPair';
 import createPlaybookCommand from '../helpers/createPlaybookCommand';
 
@@ -38,7 +38,7 @@ export default function setup(program: Command) {
     .option('--with-default-container', OPTION_DESCRIPTION_WITH_DEFAULT_CONTAINER, true)
     .option('--default-container-name <name>', OPTION_DESCRIPTION_DEFAULT_CONTAINER_NAME, 'nginx-demo')
     .option('--default-container-image <image>', OPTION_DESCRIPTION_DEFAULT_CONTAINER_IMAGE, 'nginxdemos/hello')
-    .action(async (cmd) => {
+    .action(async(cmd: Command) => {
       displayCommandGreetings(cmd);
       const {
         host,
@@ -50,7 +50,7 @@ export default function setup(program: Command) {
         dockerGroupUser,
         withDefaultContainer,
         defaultContainerName,
-        defaultContainerImage
+        defaultContainerImage,
       } = cmd;
       const rootKeyPair = resolveKeysPair(rootKey);
 
@@ -65,7 +65,7 @@ export default function setup(program: Command) {
 
         DEFAULT_CONTAINER_ENABLE: withDefaultContainer ? 'yes' : 'no',
         DEFAULT_CONTAINER_NAME: defaultContainerName,
-        DEFAULT_CONTAINER_IMAGE: defaultContainerImage
+        DEFAULT_CONTAINER_IMAGE: defaultContainerImage,
       });
 
       // execute ansible playbook to setup ubuntu

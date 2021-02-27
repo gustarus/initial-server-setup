@@ -20,7 +20,7 @@ import {
   OPTION_DESCRIPTION_TARGET_USER,
   OPTION_DESCRIPTION_WITH_CRONTAB_PRUNE,
   OPTION_DESCRIPTION_WITH_DEFAULT_CONTAINER,
-  OPTION_DESCRIPTION_WITH_DOCKER_GROUP
+  OPTION_DESCRIPTION_WITH_DOCKER_GROUP,
 } from '../constants';
 import displayCommandStep from '../helpers/displayCommandStep';
 
@@ -40,14 +40,14 @@ export default function setup(program: Command) {
     .option('--with-default-container', OPTION_DESCRIPTION_WITH_DEFAULT_CONTAINER)
     .option('--default-container-name <name>', OPTION_DESCRIPTION_DEFAULT_CONTAINER_NAME)
     .option('--default-container-image <image>', OPTION_DESCRIPTION_DEFAULT_CONTAINER_IMAGE)
-    .action(async (cmd) => {
+    .action(async(cmd: Command) => {
       displayCommandGreetings(cmd);
       const {
         host,
         rootUser,
         rootKey,
         targetUser,
-        targetKey
+        targetKey,
       } = cmd;
 
       const exec = resolveExecutable();
@@ -79,7 +79,7 @@ export default function setup(program: Command) {
         dockerGroupUser,
         withDefaultContainer,
         defaultContainerName,
-        defaultContainerImage
+        defaultContainerImage,
       } = cmd;
 
       execSyncProgressDisplay(exec, 'setup-docker', {
@@ -92,7 +92,7 @@ export default function setup(program: Command) {
         dockerGroupUser: dockerGroupUser || targetUser,
         withDefaultContainer,
         defaultContainerName,
-        defaultContainerImage
+        defaultContainerImage,
       });
 
 

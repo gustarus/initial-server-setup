@@ -1,17 +1,10 @@
 #!/usr/bin/env node
 "use strict";
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const path = __importStar(require("path"));
+const path_1 = __importDefault(require("path"));
 const commander_1 = __importDefault(require("commander"));
 const colors_1 = __importDefault(require("colors"));
 const setup_1 = __importDefault(require("./commands/setup"));
@@ -22,7 +15,7 @@ const setup_nginx_1 = __importDefault(require("./commands/setup-nginx"));
 const setup_ubuntu_1 = __importDefault(require("./commands/setup-ubuntu"));
 const constants_1 = require("./constants");
 const Package_1 = __importDefault(require("./models/Package"));
-const pathToPackage = path.resolve(constants_1.PATH_TO_ROOT, 'package.json');
+const pathToPackage = path_1.default.resolve(constants_1.PATH_TO_ROOT, 'package.json');
 const that = new Package_1.default({ path: pathToPackage });
 // display description
 commander_1.default
