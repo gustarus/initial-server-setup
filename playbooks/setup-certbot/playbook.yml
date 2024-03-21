@@ -1,35 +1,9 @@
 ---
 - hosts: all
   become: true
-  vars:
-    sys_packages: [ 'certbot', 'python-certbot-nginx' ]
-
   tasks:
-    - name: Install aptitude using apt
-      apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
-
-    # install prerequisites
-    - name: Update apt
-      apt: update_cache=yes
-    - name: Install required src packages
-      apt: name=software-properties-common state=latest
-    - name: Enable universe repositary
-      apt_repository:
-        repo: "{{ item }}"
-        state: present
-      loop:
-        - "deb http://archive.ubuntu.com/ubuntu/ bionic universe"
-        - "deb http://archive.ubuntu.com/ubuntu/ bionic-updates universe"
-        - "deb http://security.ubuntu.com/ubuntu/ bionic-security universe"
-    - name: Enable certbot repositary
-      apt_repository:
-        repo: ppa:certbot/certbot
-        state: present
-    - name: Update apt
-      apt: update_cache=yes
-
-    # install packages
-    - name: Update apt
-      apt: update_cache=yes
-    - name: Install required packages
-      apt: name={{ sys_packages }} state=latest
+    # install the certbot package
+    - name: Install certbot package
+      community.general.snap:
+        name: certbot
+        classic: yes

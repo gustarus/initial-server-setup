@@ -1,15 +1,17 @@
 Initial setup tool for `ubuntu 18.04` remote servers based on `ansible-playbook`.
 To run this tool you have to take a look at [the requirements below](https://github.com/gustarus/initial-server-setup#which-requirements-does-this-tool-have).
 
+ℹ️ Successfully tested with Ubuntu 22.04. It has some strange things like using legacy repos, but it is what it is. This is not used by anyone except me anyway.
+
 ## What does this tool do?
 All this steps will be produced on your remote server in **default** configuration.
 
 ```bash
-initial-server-setup setup --host 123.456.78.90 
+initial-server-setup setup --host 123.456.78.90
 ```
 
 ⚠️ **Be careful**: after this steps you will be able to login **only** with passed ssh keys (without password) with `default` or `root` users.
-To add more ssh keys to login from your another control nodes [you have to install those ssh keys](https://github.com/gustarus/initial-server-setup#install-additional-ssh-keys-to-remote-server) before. 
+To add more ssh keys to login from your another control nodes [you have to install those ssh keys](https://github.com/gustarus/initial-server-setup#install-additional-ssh-keys-to-remote-server) before.
 
 1. [Initial ubuntu server configuration](https://www.digitalocean.com/community/tutorials/how-to-use-ansible-to-automate-initial-server-setup-on-ubuntu-18-04):
    1. install [curl](https://www.tutorialspoint.com/unix_commands/curl.htm) for transferring data with urls;
@@ -34,7 +36,7 @@ To add more ssh keys to login from your another control nodes [you have to insta
 
 As the result you will get configured web server with nginx layer to manage web servers and with docker to run containers inside remote machine.
 Also you have to be able to see the result of [nginxdemos/hello](https://hub.docker.com/r/nginxdemos/hello/) container on `your-domain.com:8000`.
-And you will be able to login to your remote server with `ssh <default|root>@<remote-server-ip|remote-server-domain>`. 
+And you will be able to login to your remote server with `ssh <default|root>@<remote-server-ip|remote-server-domain>`.
 
 ![demo](docs/result.png)
 
@@ -66,9 +68,9 @@ initial-server-setup setup --host 123.456.78.90
 You can define the following options and full command will be like.
 ```bash
 initial-server-setup setup --host 123.456.78.90 --root-user root --root-key ~/.ssh/id_rsa.pub --target-user default --target-key ~/.ssh/id_rsa.pub
-``` 
+```
 
-Option | Default | Required | Description 
+Option | Default | Required | Description
 --- | --- | --- | ---
 `host` | | `+` | Remote server `ip` or `domain`.
 `root-user` | `root` | `-` | Remote `sudo` user to login into clean server.
@@ -83,14 +85,14 @@ You can use any command separately and every command has it own `--help`.
 initial-server-setup setup-docker --help
 ```
 
-Command | Description 
+Command | Description
 --- | ---
 `setup` [options] | General command to run all `setup-*` commands.
 `setup-key` [options] | Install local public key to remote host.
 `setup-ubuntu` [options] | Do initial ubuntu setup.
 `setup-docker` [options] | Do docker-ce setup and run `hello` container.
-`setup-nginx` [options] | Do nginx setup and run `hello` server for the `hello` container. 
-`setup-certbot` [options] | Do certbot installation with `nginx` module. 
+`setup-nginx` [options] | Do nginx setup and run `hello` server for the `hello` container.
+`setup-certbot` [options] | Do certbot installation with `nginx` module.
 
 ### Install additional ssh keys to remote server
 Copy and paste your ssh public key from another control node to what you want to give access via the following command (do not forget to use `-f` flag).
